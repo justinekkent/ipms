@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IP Management System - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-secondary": "#ffffff",
+          "background": "#f9f9ff",
+          "on-tertiary-container": "#fffbff",
+          "secondary-container": "#8455ef",
+          "inverse-on-surface": "#eff0fa",
+          "surface-container-high": "#e6e7f2",
+          "primary-fixed-dim": "#adc6ff",
+          "primary": "#0058be",
+          "on-secondary-container": "#fffbff",
+          "on-primary-fixed": "#001a42",
+          "inverse-surface": "#2e3038",
+          "on-primary-container": "#fefcff",
+          "surface-tint": "#005ac2",
+          "on-primary": "#ffffff",
+          "on-error-container": "#93000a",
+          "on-error": "#ffffff",
+          "secondary-fixed": "#e9ddff",
+          "surface-container-low": "#f2f3fd",
+          "on-tertiary-fixed-variant": "#723600",
+          "surface-container": "#ecedf7",
+          "outline": "#727785",
+          "surface-container-highest": "#e1e2ec",
+          "surface-variant": "#e1e2ec",
+          "surface-container-lowest": "#ffffff",
+          "tertiary-fixed": "#ffdcc6",
+          "on-secondary-fixed-variant": "#5516be",
+          "error": "#ba1a1a",
+          "tertiary-fixed-dim": "#ffb786",
+          "surface": "#f9f9ff",
+          "on-tertiary-fixed": "#311400",
+          "primary-fixed": "#d8e2ff",
+          "secondary-fixed-dim": "#d0bcff",
+          "outline-variant": "#c2c6d6",
+          "secondary": "#6b38d4",
+          "on-surface": "#191b23",
+          "surface-bright": "#f9f9ff",
+          "tertiary-container": "#b75b00",
+          "error-container": "#ffdad6",
+          "primary-container": "#2170e4",
+          "on-primary-fixed-variant": "#004395",
+          "tertiary": "#924700",
+          "on-tertiary": "#ffffff",
+          "on-background": "#191b23",
+          "on-surface-variant": "#424754",
+          "surface-dim": "#d8d9e3",
+          "on-secondary-fixed": "#23005c",
+          "inverse-primary": "#adc6ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "xs": "8px",
+          "gutter": "24px",
+          "xl": "48px",
+          "md": "24px",
+          "sm": "16px",
+          "lg": "32px",
+          "container-max": "1440px",
+          "base": "4px"
+        },
+        "fontFamily": {
+          "display": ["Inter"],
+          "label-caps": ["Inter"],
+          "body-lg": ["Inter"],
+          "headline-lg": ["Inter"],
+          "body-md": ["Inter"],
+          "headline-md": ["Inter"],
+          "headline-lg-mobile": ["Inter"]
+        },
+        "fontSize": {
+          "display": ["36px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+          "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "headline-lg": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+          "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+          "headline-md": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+          "headline-lg-mobile": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(226, 232, 240, 0.5);
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+  /* ── Sidebar nav — matches copyright page ── */
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    text-decoration: none;
+    color: #424754;
+    font-size: 13.5px;
+    font-weight: 400;
+    width: 100%;
+  }
+  .nav-item:hover {
+    background-color: #f1f5f9;
+    color: #191b23;
+    transform: translateX(4px);
+  }
+  .nav-item.active {
+    background-color: #e8f0fd;
+    color: #0058be;
+    font-weight: 500;
+    transform: none;
+  }
+  .nav-item.active i { color: #0058be; }
+  .nav-item i {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #727785;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0 12px;
+    margin: 12px 0 4px;
+  }
+</style>
+</head>
+<body class="bg-background font-body-md text-on-surface selection:bg-primary-fixed">
+
+<!-- ── Sidebar — updated to match copyright page ── -->
+<aside id="sidebarTarget" class="w-[260px] h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col z-50">
+
+  <!-- Brand -->
+  <div class="flex items-center gap-3 px-5 py-5 border-b border-outline-variant">
+    <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white flex-shrink-0">
+      <i class="ti ti-building-bank" style="font-size:18px;"></i>
+    </div>
+    <div>
+      <h1 class="text-sm font-semibold leading-tight text-on-surface">IP Management</h1>
+      <p class="text-[10px] text-on-surface-variant font-semibold tracking-widest uppercase">System</p>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="flex-1 overflow-y-auto p-3 space-y-0.5" aria-label="Primary navigation">
+
+    <a class="nav-item active" href="dashboard.html">
+      <i class="ti ti-layout-dashboard"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <div class="nav-section-label">IP Modules</div>
+
+    <a class="nav-item" href="copyright.html">
+      <i class="ti ti-copyright"></i>
+      <span>Copyright</span>
+    </a>
+
+    <a class="nav-item" href="patent.html">
+      <i class="ti ti-file-description"></i>
+      <span>Patent</span>
+    </a>
+
+    <a class="nav-item" href="trademark.html">
+      <i class="ti ti-shield-check"></i>
+      <span>Trademark</span>
+    </a>
+
+    <a class="nav-item" href="utility-model.html">
+      <i class="ti ti-settings-2"></i>
+      <span>Utility Model</span>
+    </a>
+
+    <a class="nav-item" href="industrial-design.html">
+      <i class="ti ti-vector-bezier-2"></i>
+      <span>Industrial Design</span>
+    </a>
+
+    <div class="border-t border-slate-100 my-2"></div>
+    <div class="nav-section-label">General</div>
+
+    <a class="nav-item" href="event.html">
+      <i class="ti ti-calendar-event"></i>
+      <span>Event</span>
+    </a>
+
+  </nav>
+
+  <!-- User row -->
+  <div class="p-3 border-t border-outline-variant">
+    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-slate-50 cursor-pointer transition-colors">
+      <div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant flex-shrink-0">
+        <img alt="Admin User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtS5si_PKG24Rw7q2_w4G1LPgv4qZ0IDFv16X_sDHSIjKkiAvbUb3IIhf7YLBfH-7mHmFgZxUFTm08OHMNK-fJM39n7IMRjiQC0aLPn-iu_zUj9DSGvVH0k1zRrb2-Ff38yVqqujD62M_WBdGWAnjmztqqh7JKfgo6XB2iQiIhySjsanYZ0WHfMu-51IhL-6xuSrra_gVjemHRGltkhHYPY0qF7bPm_irHwKJB7jsWNq0A9KMjRrphtmHInv9EjHoOZ_dtL46pTA"/>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-semibold text-on-surface truncate">Admin User</p>
+        <p class="text-[10px] text-on-surface-variant font-semibold uppercase tracking-wider">Administrator</p>
+      </div>
+      <i class="ti ti-dots-vertical text-on-surface-variant" style="font-size:16px;"></i>
+    </div>
+  </div>
+
+</aside>
+<!-- ── END Sidebar ── -->
+
+<!-- Top App Bar — UNCHANGED -->
+<header class="fixed top-0 left-0 right-0 pl-[260px] z-40 bg-surface/80 backdrop-blur-md">
+  <div class="flex justify-between items-center h-[72px] px-lg w-full">
+    <div class="flex-1 max-w-xl">
+      <div class="relative group">
+        <span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+        <input class="w-full bg-surface-container-low border-none rounded-full pl-xl pr-md py-xs focus:ring-2 focus:ring-primary-container text-body-md placeholder:text-on-surface-variant/60" placeholder="Search records, applications, or documents..." type="text"/>
+      </div>
+    </div>
+    <div class="flex items-center gap-md">
+      <div class="flex items-center gap-sm pl-md border-l border-outline-variant">
+        <div class="text-right">
+          <p class="text-body-md font-bold leading-tight">Admin User</p>
+          <p class="text-[11px] text-on-surface-variant font-label-caps tracking-wider uppercase">Administrator</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center overflow-hidden border-2 border-surface-container-highest">
+          <img alt="Admin User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtS5si_PKG24Rw7q2_w4G1LPgv4qZ0IDFv16X_sDHSIjKkiAvbUb3IIhf7YLBfH-7mHmFgZxUFTm08OHMNK-fJM39n7IMRjiQC0aLPn-iu_zUj9DSGvVH0k1zRrb2-Ff38yVqqujD62M_WBdGWAnjmztqqh7JKfgo6XB2iQiIhySjsanYZ0WHfMu-51IhL-6xuSrra_gVjemHRGltkhHYPY0qF7bPm_irHwKJB7jsWNq0A9KMjRrphtmHInv9EjHoOZ_dtL46pTA"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content Canvas — UNCHANGED -->
+<main id="mainContent" class="pl-[260px] pt-[72px] min-h-screen" style="opacity: 1; transition: opacity 0.8s ease-out, transform 0.8s ease-out; transform: translateY(0px);">
+  <div class="p-lg max-w-[1440px] mx-auto">
+    <!-- Dashboard Header Section -->
+    <div class="flex justify-between items-end mb-lg">
+      <div>
+        <h2 class="font-display text-display text-on-surface">Good Morning, Justine!</h2>
+        <p class="text-body-lg text-on-surface-variant mt-xs">Monitor your intellectual property portfolio with real-time analytics.</p>
+      </div>
+      <div class="flex gap-sm items-center">
+        <button class="h-[44px] w-[44px] flex items-center justify-center bg-surface-container-highest text-on-surface rounded-xl font-bold hover:bg-surface-container-high transition-all shadow-sm" title="Export Report">
+          <span class="material-symbols-outlined text-[24px]">download</span>
+        </button>
+        <button onclick="openDashboardResearchModal()" class="h-[44px] min-w-[160px] px-md bg-primary text-on-primary rounded-xl font-bold flex items-center justify-center gap-xs hover:opacity-90 transition-all shadow-lg shadow-primary/20">
+          <span class="material-symbols-outlined text-[20px]">add</span>
+          Add Research
+        </button>
+      </div>
+    </div>
+    <!-- Bento Grid Layout -->
+    <div class="grid grid-cols-12 gap-gutter">
+      <!-- KPI: Total Records -->
+      <div class="col-span-12 md:col-span-4 lg:col-span-3 bg-surface-container-lowest p-md rounded-xl border border-outline-variant flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow group hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+        <div class="flex justify-between items-start">
+          <div class="p-xs bg-primary-container/10 text-primary rounded-lg">
+            <span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>copyright</span>
+          </div>
+          <span class="text-tertiary font-bold text-xs flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">trending_up</span>+12%
+          </span>
+        </div>
+        <div class="mt-lg">
+          <h3 class="text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Copyright Applications</h3>
+          <p class="font-display text-display leading-none">1,245</p>
+        </div>
+      </div>
+      <!-- KPI: Active Applications -->
+      <div class="col-span-12 md:col-span-4 lg:col-span-3 bg-surface-container-lowest p-md rounded-xl border border-outline-variant flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+        <div class="flex justify-between items-start">
+          <div class="p-xs bg-secondary-container/10 text-secondary rounded-lg">
+            <span class="material-symbols-outlined" style='font-variation-settings: "FILL" 1;'>description</span>
+          </div>
+          <span class="text-tertiary font-bold text-xs flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">trending_up</span>+8%
+          </span>
+        </div>
+        <div class="mt-lg">
+          <h3 class="text-label-caps text-on-surface-variant mb-1 uppercase tracking-widest">Patent Applications</h3>
+          <p class="font-display text-display leading-none">892</p>
+        </div>
+      </div>
+      <!-- KPI: Approved Records -->
+      <div class="col-span-12 md:col-span-4 lg:col-span-3 flex flex-col gap-sm">
+        <div class="bg-surface-container-lowest p-sm rounded-xl border border-outline-variant flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer">
+          <div class="flex items-center gap-sm">
+            <div class="p-1.5 bg-emerald-100 text-emerald-700 rounded-lg">
+              <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+            </div>
+            <div>
+              <h3 class="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Trademark</h3>
+              <p class="text-lg font-bold leading-tight">412</p>
+            </div>
+          </div>
+          <span class="text-emerald-600 font-bold text-[10px] flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-xs">trending_up</span>+5%
+          </span>
+        </div>
+        <div class="bg-surface-container-lowest p-sm rounded-xl border border-outline-variant flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer">
+          <div class="flex items-center gap-sm">
+            <div class="p-1.5 bg-secondary-container/10 text-secondary rounded-lg">
+              <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">settings_applications</span>
+            </div>
+            <div>
+              <h3 class="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Utility Model</h3>
+              <p class="text-lg font-bold leading-tight">205</p>
+            </div>
+          </div>
+          <span class="text-tertiary font-bold text-[10px] flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-xs">trending_up</span>+12%
+          </span>
+        </div>
+        <div class="bg-surface-container-lowest p-sm rounded-xl border border-outline-variant flex items-center justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer">
+          <div class="flex items-center gap-sm">
+            <div class="p-1.5 bg-primary-container/10 text-primary rounded-lg">
+              <span class="material-symbols-outlined text-base" style="font-variation-settings: 'FILL' 1;">draw</span>
+            </div>
+            <div>
+              <h3 class="text-[10px] text-on-surface-variant uppercase tracking-wider font-semibold">Ind. Design</h3>
+              <p class="text-lg font-bold leading-tight">93</p>
+            </div>
+          </div>
+          <span class="text-on-surface-variant/40 font-bold text-[10px] flex items-center gap-0.5">
+            <span class="material-symbols-outlined text-xs">trending_flat</span>0%
+          </span>
+        </div>
+      </div>
+      <!-- Calendar -->
+      <div class="col-span-12 lg:col-span-3 bg-inverse-surface p-md rounded-xl text-inverse-on-surface flex flex-col relative overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+        <div class="relative z-10 flex flex-col h-full">
+          <div class="flex justify-between items-center mb-base">
+            <h3 class="text-label-caps text-surface-variant uppercase tracking-widest">Calendar</h3>
+            <span class="text-xs text-secondary-fixed font-bold">June 2024</span>
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-[10px] text-center mb-2">
+            <div class="text-outline-variant">S</div><div class="text-outline-variant">M</div><div class="text-outline-variant">T</div><div class="text-outline-variant">W</div><div class="text-outline-variant">T</div><div class="text-outline-variant">F</div><div class="text-outline-variant">S</div>
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-[11px] font-medium">
+            <div class="p-1 text-outline-variant/30">26</div><div class="p-1 text-outline-variant/30">27</div><div class="p-1 text-outline-variant/30">28</div><div class="p-1 text-outline-variant/30">29</div><div class="p-1 text-outline-variant/30">30</div><div class="p-1 text-outline-variant/30">31</div>
+            <div class="p-1 bg-primary/20 rounded-sm text-primary-fixed">1</div>
+            <div class="p-1">2</div><div class="p-1">3</div><div class="p-1 bg-secondary rounded-sm">4</div><div class="p-1">5</div><div class="p-1">6</div><div class="p-1">7</div><div class="p-1">8</div><div class="p-1">9</div><div class="p-1">10</div><div class="p-1">11</div><div class="p-1">12</div><div class="p-1">13</div><div class="p-1">14</div><div class="p-1">15</div>
+          </div>
+          <div class="mt-auto">
+            <div class="flex items-center gap-2 mt-xs p-xs bg-white/5 rounded-lg border border-white/10">
+              <div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+              <div class="text-[10px] truncate">Patent Renewal Deadline</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Category Comparison Chart -->
+      <div class="col-span-12 glass-panel rounded-2xl p-lg shadow-sm lg:col-span-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+        <div class="flex justify-between items-center mb-lg">
+          <div>
+            <h3 class="font-headline-md text-on-surface">IP Category Comparison</h3>
+            <p class="text-body-md text-on-surface-variant">Distribution across different IP types</p>
+          </div>
+          <div class="flex bg-surface-container-high rounded-lg p-1">
+            <button class="px-sm py-1 rounded-md text-xs font-bold text-on-surface-variant">Weekly</button>
+            <button class="px-sm py-1 rounded-md text-xs font-bold bg-white shadow-sm text-primary">Monthly</button>
+            <button class="px-sm py-1 rounded-md text-xs font-bold text-on-surface-variant">Yearly</button>
+          </div>
+        </div>
+        <div class="h-64 flex items-end justify-between gap-md relative">
+          <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+            <div class="border-b border-on-surface-variant w-full h-0"></div>
+            <div class="border-b border-on-surface-variant w-full h-0"></div>
+            <div class="border-b border-on-surface-variant w-full h-0"></div>
+            <div class="border-b border-on-surface-variant w-full h-0"></div>
+          </div>
+          <div class="flex-1 flex flex-col items-center group cursor-pointer">
+            <div class="w-full flex gap-0.5 items-end h-full px-1">
+              <div class="flex-1 bg-primary rounded-t-[1px] h-[60%]"></div>
+              <div class="flex-1 bg-secondary rounded-t-[1px] h-[40%]"></div>
+              <div class="flex-1 bg-tertiary-container rounded-t-[1px] h-[30%]"></div>
+              <div class="flex-1 bg-emerald-500 rounded-t-[1px] h-[20%]"></div>
+              <div class="flex-1 bg-primary-container rounded-t-[1px] h-[15%]"></div>
+            </div>
+            <span class="text-[10px] mt-2 text-on-surface-variant font-bold">Jan</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center group cursor-pointer">
+            <div class="w-full flex gap-0.5 items-end h-full px-1">
+              <div class="flex-1 bg-primary rounded-t-[1px] h-[70%]"></div>
+              <div class="flex-1 bg-secondary rounded-t-[1px] h-[50%]"></div>
+              <div class="flex-1 bg-tertiary-container rounded-t-[1px] h-[35%]"></div>
+              <div class="flex-1 bg-emerald-500 rounded-t-[1px] h-[25%]"></div>
+              <div class="flex-1 bg-primary-container rounded-t-[1px] h-[20%]"></div>
+            </div>
+            <span class="text-[10px] mt-2 text-on-surface-variant font-bold">Feb</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center group cursor-pointer">
+            <div class="w-full flex gap-0.5 items-end h-full px-1">
+              <div class="flex-1 bg-primary rounded-t-[1px] h-[85%]"></div>
+              <div class="flex-1 bg-secondary rounded-t-[1px] h-[60%]"></div>
+              <div class="flex-1 bg-tertiary-container rounded-t-[1px] h-[40%]"></div>
+              <div class="flex-1 bg-emerald-500 rounded-t-[1px] h-[30%]"></div>
+              <div class="flex-1 bg-primary-container rounded-t-[1px] h-[25%]"></div>
+            </div>
+            <span class="text-[10px] mt-2 text-on-surface-variant font-bold">Mar</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center group cursor-pointer">
+            <div class="w-full flex gap-0.5 items-end h-full px-1">
+              <div class="flex-1 bg-primary rounded-t-[1px] h-[78%]"></div>
+              <div class="flex-1 bg-secondary rounded-t-[1px] h-[52%]"></div>
+              <div class="flex-1 bg-tertiary-container rounded-t-[1px] h-[38%]"></div>
+              <div class="flex-1 bg-emerald-500 rounded-t-[1px] h-[28%]"></div>
+              <div class="flex-1 bg-primary-container rounded-t-[1px] h-[22%]"></div>
+            </div>
+            <span class="text-[10px] mt-2 text-on-surface-variant font-bold">Apr</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center group cursor-pointer">
+            <div class="w-full flex gap-0.5 items-end h-full px-1">
+              <div class="flex-1 bg-primary rounded-t-[1px] h-[95%]"></div>
+              <div class="flex-1 bg-secondary rounded-t-[1px] h-[65%]"></div>
+              <div class="flex-1 bg-tertiary-container rounded-t-[1px] h-[45%]"></div>
+              <div class="flex-1 bg-emerald-500 rounded-t-[1px] h-[35%]"></div>
+              <div class="flex-1 bg-primary-container rounded-t-[1px] h-[30%]"></div>
+            </div>
+            <span class="text-[10px] mt-2 text-on-surface-variant font-bold">May</span>
+          </div>
+        </div>
+      </div>
+      <!-- Portfolio Breakdown -->
+      <div class="col-span-12 lg:col-span-6 glass-panel rounded-2xl p-lg shadow-sm flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+        <div class="flex justify-between items-center mb-lg">
+          <div>
+            <h3 class="font-headline-md text-on-surface">Portfolio Breakdown</h3>
+            <p class="text-body-md text-on-surface-variant">Asset distribution by intellectual property type</p>
+          </div>
+          <button class="p-xs text-on-surface-variant hover:bg-surface-container-high rounded-full">
+            <span class="material-symbols-outlined">more_vert</span>
+          </button>
+        </div>
+        <div class="flex flex-1 items-center justify-center gap-xl">
+          <div class="relative w-48 h-48 rounded-full border border-outline-variant/20 shadow-inner" style="background: conic-gradient(#0058be 0% 50%, #6b38d4 50% 75%, #924700 75% 90%, #10b981 90% 100%)">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-32 h-32 bg-white rounded-full flex flex-col items-center justify-center shadow-lg">
+                <span class="text-body-md font-bold text-on-surface">Total</span>
+                <span class="text-headline-md font-bold text-primary">2,847</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-sm">
+            <div class="flex items-center gap-sm">
+              <div class="w-3 h-3 rounded-full bg-primary"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface">Patents (50%)</span>
+                <span class="text-[10px] text-on-surface-variant">1,424 assets</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <div class="w-3 h-3 rounded-full bg-secondary"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface">Trademarks (25%)</span>
+                <span class="text-[10px] text-on-surface-variant">712 assets</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <div class="w-3 h-3 rounded-full bg-tertiary"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface">Copyrights (15%)</span>
+                <span class="text-[10px] text-on-surface-variant">427 assets</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+              <div class="flex flex-col">
+                <span class="text-xs font-bold text-on-surface">Others (10%)</span>
+                <span class="text-[10px] text-on-surface-variant">284 assets</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Add Research Modal — UNCHANGED -->
+<div id="dashboard-research-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
+  <div class="relative w-full max-w-3xl rounded-3xl bg-white shadow-2xl overflow-hidden">
+    <div class="px-8 py-6 border-b border-slate-200 flex items-start justify-between gap-4">
+      <div class="max-w-[70%]">
+        <h2 class="text-2xl font-semibold text-slate-950">New Research Submission</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Create a new entry for the research registry. The status is pre-defined and cannot be changed.</p>
+      </div>
+      <button type="button" onclick="closeDashboardResearchModal()" class="rounded-full p-3 text-slate-500 hover:bg-slate-100 transition">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <form id="dashboard-research-form" class="p-8 space-y-8" onsubmit="return false;">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em] mb-2 block">Research Title</label>
+          <input id="field-title" type="text" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" placeholder="Research title"/>
+        </div>
+        <div>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em] mb-2 block">Reference Number</label>
+          <input id="field-id" type="text" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none" placeholder="e.g. CR-2026-001"/>
+        </div>
+        <div>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em] mb-2 block">Department / College</label>
+          <select id="field-dept" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
+            <option value="College of Computer Studies">College of Computer Studies</option>
+            <option value="College of Education">College of Education</option>
+            <option value="College of Engineering">College of Engineering</option>
+            <option value="College of Technology">College of Technology</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em] mb-2 block">Date of Application</label>
+          <input id="field-date" type="date" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"/>
+        </div>
+        <div class="col-span-2 space-y-4">
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em]">Authors</label>
+          <div id="authors-container" class="space-y-3"></div>
+        </div>
+        <div>
+          <label class="text-[11px] font-bold text-slate-500 uppercase tracking-[0.22em] mb-2 block">Status</label>
+          <input id="field-status" type="text" readonly class="w-full rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3 text-sm font-semibold text-blue-700 cursor-not-allowed" value="Submitted"/>
+        </div>
+      </div>
+      <p id="dashboard-form-error" class="hidden text-sm text-red-600"></p>
+    </form>
+    <div class="px-8 py-6 bg-slate-50 border-t border-slate-200 flex flex-wrap gap-3 justify-end">
+      <button type="button" onclick="closeDashboardResearchModal()" class="rounded-2xl border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition">Cancel</button>
+      <button type="button" onclick="saveDashboardResearchEntry()" class="rounded-2xl bg-primary px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition">Save Research</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmation Modal — UNCHANGED -->
+<div id="dashboard-confirm-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
+  <div class="w-full max-w-sm rounded-3xl bg-white shadow-2xl p-8 text-center">
+    <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
+      <span class="material-symbols-outlined text-3xl">check_circle</span>
+    </div>
+    <h3 class="text-xl font-semibold text-slate-950 mb-2">Research Saved</h3>
+    <p class="text-sm text-slate-600 mb-6">Your new submission was recorded successfully and can be reviewed in the registry.</p>
+    <div class="flex flex-col gap-3 sm:flex-row">
+      <button type="button" onclick="closeDashboardSuccessModal()" class="flex-1 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition">Close</button>
+      <button type="button" onclick="viewDashboardResearch()" class="flex-1 rounded-2xl bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-blue-700 transition">View Research</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.querySelector('main');
+    mainContent.style.opacity = '0';
+    mainContent.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      mainContent.style.opacity = '1';
+      mainContent.style.transform = 'translateY(0)';
+    }, 100);
+  });
+
+  function openDashboardResearchModal() {
+    const modal = document.getElementById('dashboard-research-modal');
+    if (!modal) return;
+    resetDashboardResearchForm();
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+  function closeDashboardResearchModal() {
+    const modal = document.getElementById('dashboard-research-modal');
+    if (!modal) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+  function openDashboardSuccessModal() {
+    const confirmModal = document.getElementById('dashboard-confirm-modal');
+    if (!confirmModal) return;
+    confirmModal.classList.remove('hidden');
+    confirmModal.classList.add('flex');
+    window.dashboardSuccessTimer = window.setTimeout(closeDashboardSuccessModal, 2200);
+  }
+  function closeDashboardSuccessModal() {
+    window.clearTimeout(window.dashboardSuccessTimer);
+    const confirmModal = document.getElementById('dashboard-confirm-modal');
+    if (confirmModal) {
+      confirmModal.classList.add('hidden');
+      confirmModal.classList.remove('flex');
+    }
+    closeDashboardResearchModal();
+  }
+  function viewDashboardResearch() {
+    sessionStorage.setItem('copyrightJustAdded', 'true');
+    window.location.href = 'copyright.html';
+  }
+  function resetDashboardResearchForm() {
+    const form = document.getElementById('dashboard-research-form');
+    if (!form) return;
+    form.reset();
+    document.getElementById('field-status').value = 'Submitted';
+    document.getElementById('dashboard-form-error').classList.add('hidden');
+    const authorsContainer = document.getElementById('authors-container');
+    authorsContainer.innerHTML = '';
+    addDashboardAuthorField();
+  }
+  function addDashboardAuthorField(value = '') {
+    const authorsContainer = document.getElementById('authors-container');
+    if (!authorsContainer) return;
+    const wrapper = document.createElement('div');
+    wrapper.className = 'author-row';
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = value;
+    input.placeholder = 'Author name';
+    input.className = 'w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none';
+    const enqueueEmptyField = () => {
+      const authorInputs = Array.from(authorsContainer.querySelectorAll('input'));
+      if (authorInputs.every(f => f.value.trim() !== '')) addDashboardAuthorField();
+    };
+    input.oninput = enqueueEmptyField;
+    input.onpaste = (e) => {
+      const text = (e.clipboardData || window.clipboardData).getData('text');
+      if (text && /\r?\n/.test(text)) {
+        e.preventDefault();
+        const names = text.split(/\r?\n/).map(n => n.trim()).filter(Boolean);
+        input.value = names.shift() || '';
+        names.forEach(n => addDashboardAuthorField(n));
+        enqueueEmptyField();
+      }
+    };
+    wrapper.appendChild(input);
+    authorsContainer.appendChild(wrapper);
+  }
+  function getDashboardAuthorValues() {
+    return Array.from(document.querySelectorAll('#authors-container input'))
+      .map(i => i.value.trim()).filter(Boolean);
+  }
+  function saveDashboardResearchEntry() {
+    const title = document.getElementById('field-title').value.trim();
+    const id = document.getElementById('field-id').value.trim();
+    const department = document.getElementById('field-dept').value;
+    const dateApplied = document.getElementById('field-date').value;
+    const authors = getDashboardAuthorValues();
+    const status = document.getElementById('field-status').value;
+    const errorEl = document.getElementById('dashboard-form-error');
+    if (!title || !id || !authors.length || !dateApplied) {
+      errorEl.textContent = 'Please complete all required fields and add at least one author.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    const stored = JSON.parse(sessionStorage.getItem('copyrightNewEntries') || '[]');
+    stored.push({ id, title, department, authors, date: dateApplied, status });
+    sessionStorage.setItem('copyrightNewEntries', JSON.stringify(stored));
+    openDashboardSuccessModal();
+  }
+</script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>
