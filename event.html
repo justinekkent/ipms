@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Event | IPManagementSystem</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-900">
   <div class="page-layout min-h-screen">
     <div class="grid gap-6 xl:grid-cols-[280px_1fr]">
       <aside id="sidebarTarget" class="rounded-[2rem] bg-white p-6 shadow-soft card-border"></aside>
-      <main class="space-y-6">
+      <main id="mainContent" class="space-y-6">
         <div id="headerTarget"></div>
         <section class="rounded-[2rem] bg-white p-8 shadow-soft card-border">
           <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -34,6 +34,7 @@
     </div>
     <div id="modalTarget"></div>
   </div>
-  <script src="../assets/js/app.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/spa.js"></script>
 </body>
 </html>
