@@ -167,65 +167,47 @@
 
     <!-- ── Table Card ── -->
     <section class="bg-white rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+
+      <!-- Toolbar (copied from copyright) -->
       <div class="px-6 py-4 border-b border-outline-variant flex items-center gap-3">
+
         <!-- Search -->
         <div class="relative flex-1">
           <i class="ti ti-search absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size:15px;"></i>
-          <input id="search-input" class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-9 pr-3 text-[13px] focus:ring-1 focus:ring-primary focus:bg-white focus:border-primary transition-all outline-none placeholder:text-outline" placeholder="Search by title, inventor, patent ID, department, or status…" type="text" oninput="filterAndRender()"/>
+          <input id="search-input"
+            class="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-9 pr-3 text-[13px] focus:ring-1 focus:ring-primary focus:bg-white focus:border-primary transition-all outline-none placeholder:text-outline"
+            placeholder="Search by title, inventor, patent ID, department, or status…"
+            type="text" oninput="filterAndRender()"/>
         </div>
-        <!-- Two-step Filter dropdown -->
+
+        <!-- Status filter (single-step, copied from copyright) -->
         <div class="relative shrink-0" id="filter-wrapper">
-          <button id="filter-btn" onclick="toggleFilterMenu()" class="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 text-on-surface-variant rounded-lg text-[13px] font-medium hover:bg-slate-100 transition-colors whitespace-nowrap">
+          <button id="filter-btn" onclick="toggleFilterMenu()"
+            class="flex items-center gap-1.5 px-3 py-2 bg-slate-50 border border-slate-200 text-on-surface-variant rounded-lg text-[13px] font-medium hover:bg-slate-100 transition-colors whitespace-nowrap">
             <i class="ti ti-filter" style="font-size:14px;"></i>
-            <span id="filter-label">Filter by</span>
-            <i class="ti ti-chevron-down text-outline" style="font-size:12px; transition:transform 0.15s;" id="filter-chevron"></i>
+            <span id="filter-label">All Status</span>
+            <i class="ti ti-chevron-down text-outline" id="filter-chevron" style="font-size:12px; transition:transform 0.15s;"></i>
           </button>
-          <!-- Step 1: choose type -->
-          <div id="filter-menu-type" class="hidden absolute right-0 mt-1 w-48 bg-white rounded-xl border border-slate-200 shadow-lg z-50 py-1.5 overflow-hidden">
-            <div class="px-3 py-1.5 text-[10px] font-bold text-outline uppercase tracking-widest">Filter by</div>
-            <button onclick="selectFilterType('status')" class="w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center gap-2.5 transition-colors">
-              <i class="ti ti-circle-check text-outline" style="font-size:15px;"></i> Status
-              <i class="ti ti-chevron-right text-outline ml-auto" style="font-size:12px;"></i>
-            </button>
-            <button onclick="selectFilterType('dept')" class="w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center gap-2.5 transition-colors">
-              <i class="ti ti-building text-outline" style="font-size:15px;"></i> Department
-              <i class="ti ti-chevron-right text-outline ml-auto" style="font-size:12px;"></i>
-            </button>
-            <div id="clear-filter-row" class="hidden border-t border-slate-100 mt-1 pt-1">
-              <button onclick="clearAllFilters()" class="w-full text-left px-4 py-2 text-[13px] text-red-500 hover:bg-red-50 flex items-center gap-2 transition-colors">
-                <i class="ti ti-x" style="font-size:13px;"></i> Clear filter
-              </button>
-            </div>
-          </div>
-          <!-- Step 2a: Status values -->
-          <div id="filter-menu-status" class="hidden absolute right-0 mt-1 w-52 bg-white rounded-xl border border-slate-200 shadow-lg z-50 py-1.5 overflow-hidden">
-            <button onclick="backToFilterType()" class="w-full text-left px-3 py-2 text-[12px] text-outline hover:bg-slate-50 flex items-center gap-1.5 transition-colors border-b border-slate-100 mb-1">
-              <i class="ti ti-chevron-left" style="font-size:12px;"></i> Back
-            </button>
-            <div class="px-3 py-1 text-[10px] font-bold text-outline uppercase tracking-widest">Filter by Status</div>
-            <button onclick="applyFilter('status','Submitted to IPO')" class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Submitted to IPO">Submitted to IPO<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('status','Received E-SOA')"   class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Received E-SOA">Received E-SOA<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('status','Paid')"             class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Paid">Paid<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('status','Approved')"         class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Approved">Approved<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-          </div>
-          <!-- Step 2b: Department values -->
-          <div id="filter-menu-dept" class="hidden absolute right-0 mt-1 w-56 bg-white rounded-xl border border-slate-200 shadow-lg z-50 py-1.5 overflow-hidden">
-            <button onclick="backToFilterType()" class="w-full text-left px-3 py-2 text-[12px] text-outline hover:bg-slate-50 flex items-center gap-1.5 transition-colors border-b border-slate-100 mb-1">
-              <i class="ti ti-chevron-left" style="font-size:12px;"></i> Back
-            </button>
-            <div class="px-3 py-1 text-[10px] font-bold text-outline uppercase tracking-widest">Filter by Department</div>
-            <button onclick="applyFilter('dept','College of Computer Studies')" class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="College of Computer Studies">College of Computer Studies<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('dept','College of Education')"        class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="College of Education">College of Education<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('dept','College of Engineering')"      class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="College of Engineering">College of Engineering<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
-            <button onclick="applyFilter('dept','College of Technology')"       class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="College of Technology">College of Technology<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
+          <div id="filter-menu"
+            class="hidden absolute right-0 mt-1 w-48 bg-white rounded-xl border border-slate-200 shadow-lg z-50 py-1.5 overflow-hidden">
+            <div class="px-3 py-1.5 text-[10px] font-bold text-outline uppercase tracking-widest">Filter by Status</div>
+            <button onclick="applyStatusFilter('All')"              class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="All">All<i class="ti ti-check text-primary" style="font-size:13px;"></i></button>
+            <button onclick="applyStatusFilter('Submitted to IPO')" class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Submitted to IPO">Submitted to IPO<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
+            <button onclick="applyStatusFilter('Received E-SOA')"   class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Received E-SOA">Received E-SOA<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
+            <button onclick="applyStatusFilter('Paid')"             class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Paid">Paid<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
+            <button onclick="applyStatusFilter('Approved')"         class="filter-val w-full text-left px-4 py-2.5 text-[13px] text-on-surface hover:bg-slate-50 flex items-center justify-between transition-colors" data-val="Approved">Approved<i class="ti ti-check text-primary hidden" style="font-size:13px;"></i></button>
           </div>
         </div>
-        <!-- Results count + Export -->
-        <span id="results-count" class="text-[12px] text-outline font-medium shrink-0 hidden sm:block"></span>
-        <button class="flex items-center gap-1.5 px-3 py-2 bg-primary text-white rounded-lg text-[13px] font-semibold hover:bg-blue-700 transition-colors shrink-0">
-          <i class="ti ti-download" style="font-size:14px;"></i>Export
+
+        <!-- Export icon only (copied from copyright) -->
+        <button title="Export"
+          class="w-9 h-9 flex items-center justify-center bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors shrink-0">
+          <i class="ti ti-download" style="font-size:16px;"></i>
         </button>
+
       </div>
+
+      <!-- Table -->
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
           <thead>
@@ -242,10 +224,14 @@
           <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
         </table>
       </div>
+
+      <!-- Empty state -->
       <div id="empty-state" class="hidden flex flex-col items-center justify-center py-16 text-center">
         <i class="ti ti-search-off text-slate-300" style="font-size:40px;"></i>
         <p class="mt-3 text-[13px] text-outline font-medium">No records match your search.</p>
       </div>
+
+      <!-- Pagination -->
       <div class="px-6 py-4 border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3">
         <p id="pagination-info" class="text-[12px] text-outline"></p>
         <div id="pagination-controls" class="flex items-center gap-1"></div>
@@ -258,7 +244,6 @@
 <div class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-on-surface/40 backdrop-blur-sm" id="research-modal" style="display:none;">
   <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col">
 
-    <!-- Header -->
     <div class="px-7 py-5 border-b border-outline-variant flex items-center justify-between">
       <div>
         <h2 class="text-[17px] font-bold text-on-surface" id="modal-title-text">Patent Details</h2>
@@ -270,8 +255,6 @@
     </div>
 
     <div class="p-7 space-y-5 overflow-y-auto max-h-[75vh]">
-
-      <!-- Registration Status -->
       <div>
         <label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-2">Registration Status</label>
         <select id="field-status" disabled onchange="updateStatusStyle(this)"
@@ -283,17 +266,12 @@
           <option value="Approved">Approved</option>
         </select>
       </div>
-
       <div class="border-t border-slate-100"></div>
-
-      <!-- Patent Title -->
       <div>
         <label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-2">Patent Title</label>
         <input id="field-title" type="text" disabled
           class="modal-field w-full text-[14px] font-medium text-on-surface rounded-lg py-2.5 px-3 border border-slate-200 bg-slate-50 outline-none transition-all"/>
       </div>
-
-      <!-- Patent ID + Department -->
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-2">Patent ID</label>
@@ -311,8 +289,6 @@
           </select>
         </div>
       </div>
-
-      <!-- Inventor + Date Applied -->
       <div class="grid grid-cols-2 gap-4">
         <div>
           <label class="text-[10px] font-bold text-outline uppercase tracking-widest block mb-2">Inventor(s)</label>
@@ -325,10 +301,8 @@
             class="modal-field w-full text-[14px] font-medium text-on-surface rounded-lg py-2.5 px-3 border border-slate-200 bg-slate-50 outline-none transition-all"/>
         </div>
       </div>
-
     </div>
 
-    <!-- Footer -->
     <div class="px-7 py-5 bg-slate-50 border-t border-outline-variant flex items-center justify-end gap-3">
       <button id="btn-edit" onclick="enterEditMode()" type="button"
         class="px-6 py-2.5 bg-primary text-white text-[13px] font-bold rounded-xl hover:-translate-y-0.5 transition-all flex items-center gap-2">
@@ -343,7 +317,6 @@
         <i class="ti ti-device-floppy" style="font-size:15px;"></i> Save Changes
       </button>
     </div>
-
   </div>
 </div>
 
@@ -376,11 +349,12 @@
 </div>
 
 <script>
+/* ── Clock ── */
 function updateClock() {
   const now = new Date();
   let h = now.getHours();
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
   const ampm = h >= 12 ? 'PM' : 'AM';
   h = h % 12 || 12;
   document.getElementById('live-time').textContent = `${String(h).padStart(2,'0')}:${m}:${s}`;
@@ -389,6 +363,7 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
+/* ── Data ── */
 const ALL_RECORDS = [
   { id:'PT-2024-001', title:'Automated Soil Nutrient Detection System',         inventor:'Dr. Carlos Mendoza',      dept:'College of Engineering',      status:'Paid',             date:'2024-01-10' },
   { id:'PT-2024-002', title:'Smart Water Purification Using AI Sensors',         inventor:'Prof. Ana Reyes',          dept:'College of Technology',       status:'Approved',         date:'2024-02-14' },
@@ -412,17 +387,17 @@ const ALL_RECORDS = [
   { id:'PT-2024-020', title:'Real-Time Bridge Load Monitoring System',           inventor:'Prof. Carlo Perez',        dept:'College of Engineering',      status:'Approved',         date:'2024-07-16' },
 ];
 
+/* ── State ── */
 const ROWS_PER_PAGE = 10;
 let currentPage = 1;
 let filteredRecords = [...ALL_RECORDS];
 let activeStatusFilter = 'All';
-let activeDeptFilter = 'All';
 
 const statusStyle = {
-  'Submitted to IPO': { bg:'bg-blue-50',   text:'text-blue-700'  },
-  'Received E-SOA':   { bg:'bg-indigo-50', text:'text-indigo-700'},
+  'Submitted to IPO': { bg:'bg-blue-50',   text:'text-blue-700'   },
+  'Received E-SOA':   { bg:'bg-indigo-50', text:'text-indigo-700' },
   'Paid':             { bg:'bg-emerald-50',text:'text-emerald-700'},
-  'Approved':         { bg:'bg-amber-50',  text:'text-amber-700' },
+  'Approved':         { bg:'bg-amber-50',  text:'text-amber-700'  },
 };
 
 const statusHeroStyle = {
@@ -434,101 +409,65 @@ const statusHeroStyle = {
 
 function updateStatusStyle(sel) {
   const s = statusHeroStyle[sel.value] || { border:'#e2e8f0', bg:'#f8fafc', color:'#334155' };
-  sel.style.borderColor      = s.border;
-  sel.style.backgroundColor  = s.bg;
-  sel.style.color            = s.color;
+  sel.style.borderColor     = s.border;
+  sel.style.backgroundColor = s.bg;
+  sel.style.color           = s.color;
 }
 
-/* ── Two-step filter ── */
-function closeAllFilterMenus() {
-  ['filter-menu-type','filter-menu-status','filter-menu-dept'].forEach(id =>
-    document.getElementById(id).classList.add('hidden'));
-  document.getElementById('filter-chevron').style.transform = '';
-}
-
+/* ── Filter (copied from copyright) ── */
 function toggleFilterMenu() {
-  const typeMenu = document.getElementById('filter-menu-type');
-  const isHidden = typeMenu.classList.contains('hidden');
-  closeAllFilterMenus();
-  if (isHidden) {
-    typeMenu.classList.remove('hidden');
-    document.getElementById('filter-chevron').style.transform = 'rotate(180deg)';
-    const hasFilter = activeStatusFilter !== 'All' || activeDeptFilter !== 'All';
-    document.getElementById('clear-filter-row').classList.toggle('hidden', !hasFilter);
-  }
+  const menu    = document.getElementById('filter-menu');
+  const chevron = document.getElementById('filter-chevron');
+  const opening = menu.classList.contains('hidden');
+  menu.classList.toggle('hidden', !opening);
+  chevron.style.transform = opening ? 'rotate(180deg)' : '';
 }
 
-function selectFilterType(type) {
-  closeAllFilterMenus();
-  document.getElementById(`filter-menu-${type}`).classList.remove('hidden');
-  document.getElementById('filter-chevron').style.transform = 'rotate(180deg)';
-}
-
-function backToFilterType() {
-  closeAllFilterMenus();
-  document.getElementById('filter-menu-type').classList.remove('hidden');
-  document.getElementById('filter-chevron').style.transform = 'rotate(180deg)';
-  const hasFilter = activeStatusFilter !== 'All' || activeDeptFilter !== 'All';
-  document.getElementById('clear-filter-row').classList.toggle('hidden', !hasFilter);
-}
-
-function applyFilter(type, val) {
-  if (type === 'status') activeStatusFilter = val;
-  if (type === 'dept')   activeDeptFilter   = val;
+function applyStatusFilter(val) {
+  activeStatusFilter = val;
 
   document.querySelectorAll('.filter-val').forEach(btn => {
-    btn.querySelector('i').classList.toggle('hidden', btn.dataset.val !== val || !(
-      (type === 'status' && document.getElementById('filter-menu-status').contains(btn)) ||
-      (type === 'dept'   && document.getElementById('filter-menu-dept').contains(btn))
-    ));
+    btn.querySelector('i').classList.toggle('hidden', btn.dataset.val !== val);
   });
 
-  const parts = [];
-  if (activeStatusFilter !== 'All') parts.push(activeStatusFilter);
-  if (activeDeptFilter   !== 'All') parts.push(activeDeptFilter.replace('College of ',''));
-  const lbl = document.getElementById('filter-label');
-  lbl.textContent = parts.length ? parts.join(' · ') : 'Filter by';
+  const isFiltered = val !== 'All';
+  document.getElementById('filter-label').textContent = isFiltered ? val : 'All Status';
   const btn = document.getElementById('filter-btn');
-  btn.classList.toggle('border-primary', parts.length > 0);
-  btn.classList.toggle('text-primary',   parts.length > 0);
-  btn.classList.toggle('bg-blue-50',     parts.length > 0);
+  btn.classList.toggle('border-primary', isFiltered);
+  btn.classList.toggle('text-primary',   isFiltered);
+  btn.classList.toggle('bg-blue-50',     isFiltered);
 
-  closeAllFilterMenus();
-  filterAndRender();
-}
+  document.getElementById('filter-menu').classList.add('hidden');
+  document.getElementById('filter-chevron').style.transform = '';
 
-function clearAllFilters() {
-  activeStatusFilter = 'All';
-  activeDeptFilter   = 'All';
-  document.querySelectorAll('.filter-val i').forEach(i => i.classList.add('hidden'));
-  document.getElementById('filter-label').textContent = 'Filter by';
-  const btn = document.getElementById('filter-btn');
-  ['border-primary','text-primary','bg-blue-50'].forEach(c => btn.classList.remove(c));
-  closeAllFilterMenus();
   filterAndRender();
 }
 
 document.addEventListener('click', e => {
-  const wrapper = document.getElementById('filter-wrapper');
-  if (wrapper && !wrapper.contains(e.target)) closeAllFilterMenus();
+  const w = document.getElementById('filter-wrapper');
+  if (w && !w.contains(e.target)) {
+    document.getElementById('filter-menu').classList.add('hidden');
+    document.getElementById('filter-chevron').style.transform = '';
+  }
 });
 
 function filterAndRender() {
   const q = document.getElementById('search-input').value.toLowerCase().trim();
   filteredRecords = ALL_RECORDS.filter(r => {
-    const matchStatus = activeStatusFilter === 'All' || r.status   === activeStatusFilter;
-    const matchDept   = activeDeptFilter   === 'All' || r.dept     === activeDeptFilter;
-    const matchSearch = !q || r.id.toLowerCase().includes(q)
+    const matchStatus = activeStatusFilter === 'All' || r.status === activeStatusFilter;
+    const matchSearch = !q
+      || r.id.toLowerCase().includes(q)
       || r.title.toLowerCase().includes(q)
       || r.inventor.toLowerCase().includes(q)
       || r.dept.toLowerCase().includes(q)
       || r.status.toLowerCase().includes(q);
-    return matchStatus && matchDept && matchSearch;
+    return matchStatus && matchSearch;
   });
   currentPage = 1;
   render();
 }
 
+/* ── Render table ── */
 function render() {
   const total      = filteredRecords.length;
   const totalPages = Math.max(1, Math.ceil(total / ROWS_PER_PAGE));
@@ -536,10 +475,9 @@ function render() {
   const start = (currentPage - 1) * ROWS_PER_PAGE;
   const page  = filteredRecords.slice(start, start + ROWS_PER_PAGE);
 
-  document.getElementById('results-count').textContent = `${total} result${total !== 1 ? 's' : ''}`;
-
   const emptyEl = document.getElementById('empty-state');
-  const tbody    = document.getElementById('table-body');
+  const tbody   = document.getElementById('table-body');
+
   if (total === 0) {
     tbody.innerHTML = '';
     emptyEl.classList.remove('hidden');
@@ -561,7 +499,8 @@ function render() {
         </td>
         <td class="px-5 py-4 text-[12px] text-on-surface-variant whitespace-nowrap">${r.date}</td>
         <td class="px-5 py-4 text-center">
-          <button onclick="openResearchModal('${r.id}')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-primary bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+          <button onclick="openResearchModal('${r.id}')"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-primary bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
             <span class="material-symbols-outlined text-[14px]">visibility</span>View
           </button>
         </td>
@@ -571,18 +510,19 @@ function render() {
 
   const from = total === 0 ? 0 : start + 1;
   const to   = Math.min(start + ROWS_PER_PAGE, total);
-  document.getElementById('pagination-info').textContent = `Showing ${from}–${to} of ${total} record${total !== 1 ? 's' : ''}`;
+  document.getElementById('pagination-info').textContent =
+    `Showing ${from}–${to} of ${total} record${total !== 1 ? 's' : ''}`;
 
   const ctrl = document.getElementById('pagination-controls');
   ctrl.innerHTML = '';
 
-  const addBtn = (label, page, isActive, isDisabled, isIcon) => {
-    const btn = document.createElement('button');
-    btn.className = `page-btn${isActive ? ' active' : ''}`;
-    btn.disabled  = isDisabled;
-    btn.innerHTML = isIcon ? `<span class="material-symbols-outlined text-[18px]">${label}</span>` : label;
-    if (!isDisabled && !isActive) btn.onclick = () => { currentPage = page; render(); };
-    ctrl.appendChild(btn);
+  const addBtn = (label, pg, isActive, isDisabled, isIcon) => {
+    const b = document.createElement('button');
+    b.className = `page-btn${isActive ? ' active' : ''}`;
+    b.disabled  = isDisabled;
+    b.innerHTML = isIcon ? `<span class="material-symbols-outlined text-[18px]">${label}</span>` : label;
+    if (!isDisabled && !isActive) b.onclick = () => { currentPage = pg; render(); };
+    ctrl.appendChild(b);
   };
 
   addBtn('chevron_left', currentPage - 1, false, currentPage === 1, true);
@@ -600,10 +540,10 @@ function render() {
 
   pages.forEach(p => {
     if (p === '…') {
-      const span = document.createElement('span');
-      span.className  = 'page-btn text-outline cursor-default';
-      span.textContent = '…';
-      ctrl.appendChild(span);
+      const sp = document.createElement('span');
+      sp.className = 'page-btn text-outline cursor-default';
+      sp.textContent = '…';
+      ctrl.appendChild(sp);
     } else {
       addBtn(p, p, p === currentPage, false, false);
     }
@@ -618,20 +558,16 @@ const EDITABLE_FIELDS = ['field-title','field-dept','field-inventor','field-date
 function openResearchModal(id) {
   const rec = ALL_RECORDS.find(r => r.id === id);
   if (!rec) return;
-
   document.getElementById('modal-subtitle-id').textContent = rec.id;
   document.getElementById('field-title').value    = rec.title;
   document.getElementById('field-id').value       = rec.id;
   document.getElementById('field-inventor').value = rec.inventor;
   document.getElementById('field-date').value     = rec.date;
-
   const deptSel = document.getElementById('field-dept');
   for (let o of deptSel.options) o.selected = o.value === rec.dept;
-
   const statusSel = document.getElementById('field-status');
   for (let o of statusSel.options) o.selected = o.value === rec.status;
   updateStatusStyle(statusSel);
-
   setViewMode();
   document.getElementById('research-modal').style.display = 'flex';
 }
@@ -684,6 +620,7 @@ function closeModal() {
 
 function openConfirmation()  { document.getElementById('confirm-modal').style.display = 'flex'; }
 function closeConfirmation() { document.getElementById('confirm-modal').style.display = 'none'; }
+
 function confirmSave() {
   closeConfirmation();
   closeModal();
@@ -691,24 +628,22 @@ function confirmSave() {
 }
 
 function showSuccessToast() {
-  const toast = document.getElementById('success-toast');
-  const bar   = document.getElementById('toast-bar');
+  const toast    = document.getElementById('success-toast');
+  const bar      = document.getElementById('toast-bar');
   const DURATION = 3000;
   bar.style.transition = 'none';
-  bar.style.width = '100%';
-  toast.style.opacity = '0';
+  bar.style.width      = '100%';
+  toast.style.opacity  = '0';
   toast.style.transform = 'translateY(12px)';
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      toast.style.opacity = '1';
-      toast.style.transform = 'translateY(0)';
-      bar.style.transition = `width ${DURATION}ms linear`;
-      bar.style.width = '0%';
-    });
-  });
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    toast.style.opacity   = '1';
+    toast.style.transform = 'translateY(0)';
+    bar.style.transition  = `width ${DURATION}ms linear`;
+    bar.style.width       = '0%';
+  }));
   clearTimeout(window._toastTimer);
   window._toastTimer = setTimeout(() => {
-    toast.style.opacity = '0';
+    toast.style.opacity   = '0';
     toast.style.transform = 'translateY(12px)';
   }, DURATION);
 }

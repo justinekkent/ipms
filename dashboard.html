@@ -155,7 +155,6 @@
 </head>
 <body class="bg-background font-body-md text-on-surface selection:bg-primary">
 
-<!-- ── Sidebar ── -->
 <aside class="w-[260px] h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-lowest flex flex-col z-50">
   <div class="flex items-center gap-3 px-5 py-5 border-b border-outline-variant">
     <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white flex-shrink-0">
@@ -185,7 +184,6 @@
   </div>
 </aside>
 
-<!-- ── Top App Bar ── -->
 <header class="fixed top-0 left-0 right-0 pl-[260px] z-40 bg-surface/80 backdrop-blur-md border-b border-outline-variant">
   <div class="flex justify-between items-center h-[60px] px-8 w-full">
     <div class="flex-1 max-w-xl">
@@ -206,7 +204,6 @@
   </div>
 </header>
 
-<!-- ── Main Content ── -->
 <main id="mainContent" class="pl-[280px] pt-[76px] min-h-screen" style="opacity:0;transition:opacity 0.6s ease-out,transform 0.6s ease-out;transform:translateY(8px)">
   <div class="py-6 px-8 max-w-[1440px]">
     <div class="flex justify-between items-center mb-6">
@@ -225,7 +222,6 @@
     </div>
 
     <div class="grid grid-cols-12 gap-6">
-      <!-- Copyright KPI -->
       <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col" style="border-left:3px solid #0058be;">
         <div class="flex flex-col justify-between h-full p-4 gap-2">
           <div class="flex justify-between items-center">
@@ -238,7 +234,6 @@
           <div><p class="text-[28px] font-bold leading-none text-on-surface tracking-tight">1,245</p><p class="text-[11px] text-on-surface-variant mt-1">Applications filed</p></div>
         </div>
       </div>
-      <!-- Patent KPI -->
       <div class="col-span-12 md:col-span-6 lg:col-span-3 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm hover:-translate-y-1 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col" style="border-left:3px solid #6b38d4;">
         <div class="flex flex-col justify-between h-full p-4 gap-2">
           <div class="flex justify-between items-center">
@@ -251,7 +246,6 @@
           <div><p class="text-[28px] font-bold leading-none text-on-surface tracking-tight">892</p><p class="text-[11px] text-on-surface-variant mt-1">Applications filed</p></div>
         </div>
       </div>
-      <!-- Secondary KPIs -->
       <div class="col-span-12 md:col-span-6 lg:col-span-3 flex flex-col gap-2.5">
         <div class="bg-surface-container-lowest rounded-xl border border-outline-variant flex items-center gap-3 px-4 py-3 shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 cursor-pointer flex-1">
           <div class="p-1.5 rounded-lg flex-shrink-0" style="background:#d1fae5;"><span class="material-symbols-outlined text-[16px]" style="color:#059669;font-variation-settings:'FILL' 1;">verified_user</span></div>
@@ -270,12 +264,10 @@
         </div>
       </div>
 
-      <!-- Calendar — fixed-height wrapper prevents layout shift -->
       <div class="col-span-12 lg:col-span-3 bg-inverse-surface p-4 rounded-xl text-inverse-on-surface flex flex-col relative overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
         <div class="relative z-10 flex flex-col h-full">
-          <!-- header row -->
           <div class="cal-header">
-            <button class="cal-nav-btn" id="calPrev" aria-label="Previous month">&#8249;</button>
+            <button class="cal-nav-btn" id="calPrev" aria-label="Previous month">‹</button>
             <div style="position:relative;">
               <button class="cal-month-label" id="calMonthLabel" onclick="toggleMonthPicker(event)">
                 <span id="calMonthText"></span>
@@ -283,26 +275,23 @@
               </button>
               <div class="cal-month-picker" id="calMonthPicker">
                 <div class="mp-year-row">
-                  <button class="mp-year-btn" id="mpPrevYear">&#8249;</button>
+                  <button class="mp-year-btn" id="mpPrevYear">‹</button>
                   <span class="mp-year-val" id="mpYearVal"></span>
-                  <button class="mp-year-btn" id="mpNextYear">&#8250;</button>
+                  <button class="mp-year-btn" id="mpNextYear">›</button>
                 </div>
                 <div class="mp-months" id="mpMonths"></div>
               </div>
             </div>
-            <button class="cal-nav-btn" id="calNext" aria-label="Next month">&#8250;</button>
+            <button class="cal-nav-btn" id="calNext" aria-label="Next month">›</button>
           </div>
-          <!-- grid — always 6 complete rows (42 cells) + 7 day headers -->
           <div class="cal-grid" id="calGrid">
             <div class="cal-day-label">Su</div><div class="cal-day-label">Mo</div><div class="cal-day-label">Tu</div>
             <div class="cal-day-label">We</div><div class="cal-day-label">Th</div><div class="cal-day-label">Fr</div><div class="cal-day-label">Sa</div>
           </div>
-          <!-- upcoming note -->
           <div class="mt-auto pt-3" id="calUpcoming"></div>
         </div>
       </div>
 
-      <!-- Line Chart -->
       <div class="col-span-12 glass-panel rounded-2xl p-6 shadow-sm lg:col-span-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
         <div class="flex justify-between items-start mb-3">
           <div>
@@ -319,7 +308,6 @@
         <div style="position:relative;width:100%;height:200px;"><canvas id="lineChart"></canvas></div>
       </div>
 
-      <!-- Pie Chart -->
       <div class="col-span-12 lg:col-span-6 glass-panel rounded-2xl p-6 shadow-sm flex flex-col hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
         <div class="flex justify-between items-center mb-5">
           <div>
@@ -337,14 +325,11 @@
   </div>
 </main>
 
-<!-- ══════════════════════════════════════════
-     NOTE MODAL
-══════════════════════════════════════════ -->
 <div class="note-overlay" id="noteOverlay" role="dialog" aria-modal="true">
   <div class="note-modal">
     <div class="note-modal-header">
       <span class="note-modal-title" id="noteTitleEl">Reminder</span>
-      <button class="note-modal-close" onclick="closeNoteModal()">&times;</button>
+      <button class="note-modal-close" onclick="closeNoteModal()">×</button>
     </div>
     <div class="note-modal-date" id="noteDateEl"></div>
     <div id="noteViewMode">
@@ -363,9 +348,6 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 1 — CATEGORY SELECTION MODAL
-══════════════════════════════════════════ -->
 <div id="category-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
   <div class="relative w-full max-w-2xl rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col" style="animation:modalIn 0.22s ease;">
     <div class="px-8 py-6 border-b border-slate-100 flex items-start justify-between gap-4">
@@ -379,8 +361,7 @@
     </div>
     <div class="px-8 py-7">
       <div class="grid grid-cols-5 gap-4" id="catGrid">
-        <!-- Rendered by JS -->
-      </div>
+        </div>
     </div>
     <div class="px-8 pb-7 flex gap-3 justify-end">
       <button onclick="closeCategoryModal()" class="px-5 py-2.5 text-[13px] font-semibold text-on-surface-variant border border-slate-200 rounded-xl hover:bg-slate-100 transition-all">Cancel</button>
@@ -391,14 +372,10 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 2 — ADD RESEARCH FORM MODAL
-══════════════════════════════════════════ -->
 <div id="research-modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
   <div class="relative w-full max-w-2xl rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
     <div class="px-7 py-5 border-b border-slate-200 flex items-start justify-between gap-4">
       <div>
-        <!-- Category breadcrumb shown here -->
         <div class="flex items-center gap-2 mb-3">
           <button onclick="backToCategory()" class="text-[11px] text-primary font-semibold hover:underline flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">arrow_back</span>Change Category</button>
           <span class="text-[11px] text-outline">›</span>
@@ -463,15 +440,12 @@
       <p id="rm-error" class="text-[12px] text-red-500 hidden"></p>
       <div class="flex gap-3 ml-auto">
         <button onclick="closeAllResearchModals()" type="button" class="px-5 py-2.5 text-[13px] font-semibold text-on-surface-variant border border-slate-200 rounded-xl hover:bg-slate-100 transition-all">Cancel</button>
-        <button onclick="reviewResearchEntry()" type="button" class="px-6 py-2.5 text-[13px] font-bold text-white bg-primary rounded-xl hover:bg-blue-700 hover:-translate-y-0.5 transition-all">Review &amp; Submit</button>
+        <button onclick="reviewResearchEntry()" type="button" class="px-6 py-2.5 text-[13px] font-bold text-white bg-primary rounded-xl hover:bg-blue-700 hover:-translate-y-0.5 transition-all">Review & Submit</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 3 — REVIEW CONFIRMATION MODAL
-══════════════════════════════════════════ -->
 <div id="review-modal" class="fixed inset-0 z-[65] hidden items-center justify-center p-4 bg-slate-950/50 backdrop-blur-sm">
   <div class="w-full max-w-md rounded-2xl bg-white shadow-2xl overflow-hidden flex flex-col" style="animation:modalIn 0.22s ease;">
     <div class="px-6 pt-6 pb-4 border-b border-slate-100">
@@ -503,15 +477,12 @@
         <span class="material-symbols-outlined text-[15px]">arrow_back</span> Back
       </button>
       <button onclick="confirmResearchEntry()" type="button" class="px-6 py-2.5 text-[13px] font-bold text-white bg-primary rounded-xl hover:bg-blue-700 hover:-translate-y-0.5 transition-all flex items-center gap-1.5">
-        <span class="material-symbols-outlined text-[15px]">check</span> Confirm &amp; Save
+        <span class="material-symbols-outlined text-[15px]">check</span> Confirm & Save
       </button>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     STEP 4 — SUCCESS MODAL
-══════════════════════════════════════════ -->
 <div id="success-modal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-slate-950/40 backdrop-blur-sm">
   <div class="w-full max-w-sm rounded-2xl bg-white shadow-2xl p-8 text-center" style="animation:modalIn 0.22s ease;">
     <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
@@ -543,15 +514,12 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ══════════════════════════════════
    CALENDAR
 ══════════════════════════════════ */
-const calNotes = {
-  '2026-05-22': 'Patent Renewal Deadline — submit Form C before end of day.',
-  '2026-05-28': 'Copyright review committee meeting at 10am.',
-  '2026-06-03': 'Trademark filing window opens.',
-};
+// Empty object to start fresh without dummy data
+const calNotes = {}; 
 const today = new Date();
 let calYear  = today.getFullYear();
 let calMonth = today.getMonth();
-let pickerYear = calYear;    // year shown in the month picker
+let pickerYear = calYear;
 let pickerOpen = false;
 
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -726,7 +694,7 @@ function deleteNote() { delete calNotes[activeNoteKey]; closeNoteModal(); buildC
 document.getElementById('noteOverlay').addEventListener('click',function(e){if(e.target===this)closeNoteModal();});
 
 /* ══════════════════════════════════
-   PIE CHART
+   PIE CHART (Kept default data so dashboard isn't blank)
 ══════════════════════════════════ */
 const PIE_DATA=[{label:'BSIT',pct:38,color:'#0058be'},{label:'BSCS',pct:22,color:'#6b38d4'},{label:'BS Engineering',pct:18,color:'#924700'},{label:'BS Education',pct:12,color:'#10b981'},{label:'Others',pct:10,color:'#e24b4a'}];
 function buildPieChart(){
@@ -736,7 +704,7 @@ function buildPieChart(){
 }
 
 /* ══════════════════════════════════
-   LINE CHART
+   LINE CHART (Kept default data so dashboard isn't blank)
 ══════════════════════════════════ */
 const LINE_SERIES=[{label:'Copyright',color:'#0058be',dash:[]},{label:'Patent',color:'#6b38d4',dash:[6,3]},{label:'Trademark',color:'#10b981',dash:[3,3]},{label:'Utility Model',color:'#924700',dash:[8,4]}];
 const LINE_DATA={
@@ -814,8 +782,11 @@ function backToCategory() {
 }
 
 /* ══════════════════════════════════
-   RESEARCH FORM
+   RESEARCH FORM & CLEAN STATE
 ══════════════════════════════════ */
+// This state object avoids DOM scraping and prevents the "person" text bug
+let pendingSubmission = null; 
+
 function openResearchForm() {
   // Set category badge in form header
   const cat = CATEGORIES.find(c => c.id === selectedCategory);
@@ -833,6 +804,9 @@ function openResearchForm() {
   clearAuthorError();
   addAuthorField();
 
+  // Clear any existing pending submissions
+  pendingSubmission = null;
+
   const m = document.getElementById('research-modal');
   m.classList.remove('hidden'); m.classList.add('flex');
 }
@@ -844,6 +818,7 @@ function closeAllResearchModals() {
   closeCategoryModal(); closeResearchModal();
   document.getElementById('review-modal').classList.add('hidden');
   document.getElementById('review-modal').classList.remove('flex');
+  pendingSubmission = null;
 }
 
 /* ── Author field with paste-split and 15-author limit ── */
@@ -970,15 +945,16 @@ function getAuthorValues() {
   return Array.from(document.querySelectorAll('#rm-authors input')).map(i=>i.value.trim()).filter(Boolean);
 }
 
-/* ── Review modal ── */
+/* ── Review modal & Clean Submission Flow ── */
 function reviewResearchEntry() {
-  const title=document.getElementById('rm-title').value.trim();
-  const id=document.getElementById('rm-id').value.trim();
-  const dept=document.getElementById('rm-dept').value;
-  const date=document.getElementById('rm-date').value;
-  const authors=getAuthorValues();
-  const errorEl=document.getElementById('rm-error');
-  if(!title||!id||!date||!authors.length){
+  const title = document.getElementById('rm-title').value.trim();
+  const id = document.getElementById('rm-id').value.trim();
+  const dept = document.getElementById('rm-dept').value;
+  const date = document.getElementById('rm-date').value;
+  const authors = getAuthorValues();
+  const errorEl = document.getElementById('rm-error');
+
+  if(!title || !id || !date || !authors.length){
     errorEl.textContent='Please fill in all required fields and add at least one author.';
     errorEl.classList.remove('hidden'); return;
   }
@@ -988,28 +964,39 @@ function reviewResearchEntry() {
   }
   errorEl.classList.add('hidden');
 
-  // Category badge in review
-  const cat=CATEGORIES.find(c=>c.id===selectedCategory);
-  const rvCat=document.getElementById('rv-cat');
+  // Save everything to a clean, isolated state object
+  pendingSubmission = {
+    title: title,
+    id: id,
+    department: dept,
+    date: date,
+    authors: authors, // the pure array of strings without any HTML included
+    category: selectedCategory,
+    status: 'Submitted to IPO'
+  };
+
+  // Populate UI purely for visual review
+  const cat = CATEGORIES.find(c => c.id === selectedCategory);
+  const rvCat = document.getElementById('rv-cat');
   rvCat.innerHTML=`<span class="cat-badge" style="background:${cat.bg};color:${cat.color};border:1px solid ${cat.color}33;font-size:12px;"><i class="${cat.icon}" style="font-size:13px;"></i>${cat.label}</span>`;
 
-  document.getElementById('rv-title').textContent=title;
-  document.getElementById('rv-id').textContent=id;
-  document.getElementById('rv-dept').textContent=dept;
-  const [yr,mo,dy]=date.split('-');
-  document.getElementById('rv-date').textContent=new Date(yr,mo-1,dy).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('rv-title').textContent = title;
+  document.getElementById('rv-id').textContent = id;
+  document.getElementById('rv-dept').textContent = dept;
+  const [yr, mo, dy] = date.split('-');
+  document.getElementById('rv-date').textContent = new Date(yr, mo-1, dy).toLocaleDateString('en-US', {year:'numeric', month:'long', day:'numeric'});
 
-  const authorsEl=document.getElementById('rv-authors');
-  authorsEl.innerHTML='';
-  authors.forEach(a=>{
-    const chip=document.createElement('span');
-    chip.style.cssText='display:inline-flex;align-items:center;gap:4px;background:#f2f3fd;color:#191b23;border:1px solid #e1e2ec;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:500;';
-    chip.innerHTML=`<span class="material-symbols-outlined" style="font-size:12px;color:#6b38d4;font-variation-settings:'FILL' 1;">person</span>${a}`;
+  const authorsEl = document.getElementById('rv-authors');
+  authorsEl.innerHTML = '';
+  authors.forEach(a => {
+    const chip = document.createElement('span');
+    chip.style.cssText = 'display:inline-flex;align-items:center;gap:4px;background:#f2f3fd;color:#191b23;border:1px solid #e1e2ec;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:500;margin-right:4px;margin-bottom:4px;';
+    chip.innerHTML = `<span class="material-symbols-outlined" style="font-size:12px;color:#6b38d4;font-variation-settings:'FILL' 1;">person</span>${a}`;
     authorsEl.appendChild(chip);
   });
 
   closeResearchModal();
-  const rm=document.getElementById('review-modal');
+  const rm = document.getElementById('review-modal');
   rm.classList.remove('hidden'); rm.classList.add('flex');
 }
 
@@ -1020,22 +1007,24 @@ function backToResearchModal() {
 }
 
 function confirmResearchEntry() {
-  const title=document.getElementById('rv-title').textContent;
-  const id=document.getElementById('rv-id').textContent;
-  const dept=document.getElementById('rv-dept').textContent;
-  const authors=Array.from(document.querySelectorAll('#rv-authors span[style]')).map(el=>el.textContent.trim());
-  const dateRaw=document.getElementById('rm-date')?document.getElementById('rm-date').value:'';
+  // Use the clean object we created in reviewResearchEntry()
+  if (!pendingSubmission) return;
 
-  const stored=JSON.parse(sessionStorage.getItem('copyrightNewEntries')||'[]');
-  stored.push({id,title,department:dept,authors,date:dateRaw,category:selectedCategory,status:'Submitted to IPO'});
-  sessionStorage.setItem('copyrightNewEntries',JSON.stringify(stored));
+  const stored = JSON.parse(sessionStorage.getItem('copyrightNewEntries') || '[]');
+  
+  // Push the perfectly clean pendingSubmission object
+  stored.push(pendingSubmission);
+  sessionStorage.setItem('copyrightNewEntries', JSON.stringify(stored));
 
   document.getElementById('review-modal').classList.add('hidden');
   document.getElementById('review-modal').classList.remove('flex');
 
-  const sm=document.getElementById('success-modal');
+  const sm = document.getElementById('success-modal');
   sm.classList.remove('hidden'); sm.classList.add('flex');
-  window._successTimer=setTimeout(closeSuccessModal,4000);
+  window._successTimer = setTimeout(closeSuccessModal, 4000);
+
+  // Clear state after successful submission
+  pendingSubmission = null;
 }
 
 function closeSuccessModal(){
