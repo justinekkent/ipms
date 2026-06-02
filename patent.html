@@ -60,6 +60,14 @@
   .page-btn:hover:not(.active):not(:disabled) { background: #f1f5f9; }
   .page-btn.active { background: #0058be; color: #fff; font-weight: 700; }
   .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .page-fade {
+    animation: fadeIn 0.4s ease both;
+  }
 </style>
 </head>
 <body class="bg-surface text-on-surface font-sans antialiased flex min-h-screen">
@@ -88,14 +96,13 @@
     <a class="nav-item" href="event.html"><i class="ti ti-calendar-event"></i><span>Event</span></a>
   </nav>
   <div class="p-4 border-t border-outline-variant">
-    <button onclick="window.location.href='login.html'" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-outline-variant text-on-surface-variant text-sm font-semibold hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all duration-200">
-      <i class="ti ti-logout" style="font-size:16px;"></i>
-      <span>Log Out</span>
-    </button>
-  </div>
+  <button onclick="window.location.href='index.html'" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-outline-variant text-on-surface-variant text-sm font-semibold hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all duration-200">
+    <i class="ti ti-logout" style="font-size:16px;"></i><span>Log Out</span>
+  </button>
+</div>
 </aside>
 
-<main class="flex-1 ml-[260px] min-h-screen flex flex-col bg-surface">
+<main class="flex-1 ml-[260px] min-h-screen flex flex-col bg-surface page-fade">
 
   <!-- ── Top Navbar ── -->
   <header class="h-[60px] flex items-center justify-end px-8 sticky top-0 bg-white/80 backdrop-blur-md z-40 border-b border-outline-variant">
@@ -212,13 +219,13 @@
         <table class="w-full text-left border-collapse">
           <thead>
             <tr class="bg-slate-50">
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Patent ID</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant">Title</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Inventor</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Department</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Status</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Date Applied</th>
-              <th class="px-5 py-3 text-[10px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant text-center">Action</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Patent ID</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant">Title</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Inventor</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Department</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Status</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant whitespace-nowrap">Date Applied</th>
+              <th class="px-5 py-3 text-[11px] font-bold text-outline uppercase tracking-widest border-b border-outline-variant text-center whitespace-nowrap">Action</th>
             </tr>
           </thead>
           <tbody id="table-body" class="divide-y divide-slate-100"></tbody>
@@ -486,19 +493,19 @@ function render() {
     tbody.innerHTML = page.map(r => {
       const s = statusStyle[r.status] || { bg:'bg-slate-100', text:'text-slate-600' };
       return `<tr class="hover:bg-slate-50 transition-colors">
-        <td class="px-5 py-4 text-[12px] font-bold text-slate-800 whitespace-nowrap">${r.id}</td>
-        <td class="px-5 py-4 text-[13px] font-medium text-slate-700 max-w-[240px]">
+        <td class="px-5 py-4 text-[12px] font-bold text-slate-800 whitespace-nowrap w-[120px]">${r.id}</td>
+        <td class="px-5 py-4 text-[13px] font-medium text-slate-700 w-[200px] max-w-[200px]">
           <span class="line-clamp-2 leading-snug">${r.title}</span>
         </td>
-        <td class="px-5 py-4 text-[12px] text-on-surface-variant whitespace-nowrap">${r.inventor}</td>
-        <td class="px-5 py-4 text-[12px] text-on-surface-variant max-w-[160px]">
+        <td class="px-5 py-4 text-[12px] text-on-surface-variant whitespace-nowrap w-[160px]">${r.inventor}</td>
+        <td class="px-5 py-4 text-[12px] text-on-surface-variant w-[140px] max-w-[140px]">
           <span class="line-clamp-1">${r.dept}</span>
         </td>
-        <td class="px-5 py-4 whitespace-nowrap">
+        <td class="px-5 py-4 whitespace-nowrap w-[130px]">
           <span class="inline-flex items-center px-2.5 py-1 ${s.bg} ${s.text} text-[10px] font-bold rounded-full uppercase tracking-wider">${r.status}</span>
         </td>
-        <td class="px-5 py-4 text-[12px] text-on-surface-variant whitespace-nowrap">${r.date}</td>
-        <td class="px-5 py-4 text-center">
+        <td class="px-5 py-4 text-[12px] text-on-surface-variant whitespace-nowrap w-[110px]">${r.date}</td>
+        <td class="px-5 py-4 text-center w-[80px]">
           <button onclick="openResearchModal('${r.id}')"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 text-[12px] font-semibold text-primary bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
             <span class="material-symbols-outlined text-[14px]">visibility</span>View
